@@ -5,7 +5,11 @@ import 'package:jobapp/configs/ui_configs.dart';
 
 class BodyText extends Text {
   BodyText(text,
-      {super.key, double? fontSize, Color? color, FontWeight? fontWeight})
+      {super.key,
+      double? fontSize,
+      Color? color,
+      FontWeight? fontWeight,
+      super.textAlign})
       : super(text,
             style: TextStyle(
                 color: color ?? ColorsConfigs.dark,

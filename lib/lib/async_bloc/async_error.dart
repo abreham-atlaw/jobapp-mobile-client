@@ -1,4 +1,5 @@
 class AsyncError implements Exception {
   String message;
-  AsyncError(this.message);
+  int? code;
+  AsyncError(this.message, {this.code});
 }

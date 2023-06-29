@@ -3,10 +3,13 @@ abstract class Serializer<F, T> {
   F deserialize(T data);
 
   List<T> serializeMany(List<F> instances) {
+    if (instances.isEmpty) {
+      return [];
+    }
     return instances.map((instance) => serialize(instance)).toList();
   }
 
-  List<F> deserializeMany(List<T> data) {
+  List<F> deserializeMany(List<dynamic> data) {
     return data.map((e) => deserialize(e)).toList();
   }
 }

@@ -1,5 +1,6 @@
 import 'package:flutter/widgets.dart';
 import 'package:go_router/go_router.dart';
+import 'package:jobapp/lib/utils/routing.dart';
 
 class Link extends StatelessWidget {
   final String to;
@@ -10,7 +11,7 @@ class Link extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        context.go(to);
+        RoutingUitls.redirect(to, context);
       },
       child: child,
     );

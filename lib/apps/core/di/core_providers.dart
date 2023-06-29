@@ -1,4 +1,5 @@
 import 'package:jobapp/apps/auth/di/auth_providers.dart';
+import 'package:jobapp/apps/core/data/repositories/job_repository.dart';
 import 'package:jobapp/lib/network/network_client.dart';
 
 import 'package:jobapp/configs/data_configs.dart' as config;
@@ -15,6 +16,10 @@ class CoreProviders {
         baseUrl: config.apiBaseUrl,
         token: await AuthProviders.provideTokenStorage().getToken());
     return CoreProviders._authenticatedNetworkClient!;
+  }
+
+  static JobRepository provideJobRepositry() {
+    return JobRepository();
   }
 
   static reset() {

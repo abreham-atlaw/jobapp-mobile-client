@@ -8,7 +8,9 @@ class WorkerSerializer extends Serializer<Worker, Map<String, dynamic>> {
   Worker deserialize(Map<String, dynamic> data) {
     return Worker(
         user: _userSerializer.deserialize(data["user"]),
-        skills: data["skills"],
+        skills: data["skills"]
+            .map<String>((dynamic skill) => skill.toString())
+            .toList(),
         isApproved: data["is_approved"]);
   }
 

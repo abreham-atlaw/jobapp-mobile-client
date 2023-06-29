@@ -12,4 +12,8 @@ class AuthProviders {
     AuthProviders._authRepository ??= AuthRepository();
     return AuthProviders._authRepository!;
   }
+
+  static void reset() {
+    AuthProviders._authRepository = null;
+  }
 }

@@ -6,6 +6,7 @@ import 'package:jobapp/lib/async_bloc/async_events.dart';
 import 'package:jobapp/lib/async_bloc/async_state.dart';
 import 'package:jobapp/lib/async_bloc/async_status.dart';
 import 'package:jobapp/lib/async_bloc/base_state.dart';
+import 'package:jobapp/lib/widgets/screens/app_scaffold.dart';
 import 'package:jobapp/lib/widgets/screens/error_screen.dart';
 import 'package:jobapp/lib/widgets/screens/loading_screen.dart';
 
@@ -29,8 +30,8 @@ abstract class AsyncBlocScreen<B extends AsyncBloc<S>, S extends BaseState>
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: BlocProvider<B>(
+    return AppScreen(
+      child: BlocProvider<B>(
         create: (context) {
           return onCreateBloc(onCreateState());
         },

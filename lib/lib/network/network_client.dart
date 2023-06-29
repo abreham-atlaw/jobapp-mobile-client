@@ -85,7 +85,7 @@ class NetworkClient {
       throw ApiException(response.statusCode, response: response);
     }
 
-    return request.deserializeObject(response.body);
+    return request.deserializeObject(jsonDecode(response.body));
   }
 }
 

@@ -1,6 +1,6 @@
-const String apiHost = "192.168.1.5:8000";
+const String apiHost = "172.20.10.3:8888";
 const String apiBaseUrl = "/api";
 
 // AUTH
 const String authorizationKey = "Authorization";
-const String authorizationPrefix = "Bearer";
+const String authorizationPrefix = "Token";

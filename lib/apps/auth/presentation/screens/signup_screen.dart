@@ -4,8 +4,9 @@ import 'package:jobapp/apps/auth/application/blocs/signup_bloc.dart';
 import 'package:jobapp/apps/auth/application/events/signup_event.dart';
 import 'package:jobapp/apps/auth/application/states/signup_state.dart';
 import 'package:jobapp/configs/ui_configs.dart';
+import 'package:jobapp/lib/async_bloc/async_status.dart';
+import 'package:jobapp/lib/utils/routing.dart';
 import 'package:jobapp/lib/widgets/buttons/async_button.dart';
-import 'package:jobapp/lib/widgets/containers/full_container.dart';
 import 'package:jobapp/lib/widgets/containers/percentage_container.dart';
 import 'package:jobapp/lib/widgets/forms/labeled_field.dart';
 import 'package:jobapp/lib/widgets/forms/text_field_widget.dart';
@@ -25,6 +26,9 @@ class SignupScreen extends AsyncBlocScreen<SignupBloc, SignupState> {
 
   @override
   Widget onCreateMain(BuildContext context, SignupState state) {
+    if (state.asyncStatus == AsyncStatus.done) {
+      RoutingUitls.redirect("/", context);
+    }
     return SingleChildScrollView(
       child: Container(
         padding: EdgeInsets.symmetric(vertical: SpacingConfigs.spacing5),
@@ -38,7 +42,7 @@ class SignupScreen extends AsyncBlocScreen<SignupBloc, SignupState> {
               SizedBox(
                 height: SpacingConfigs.spacing3,
               ),
-              ErrorText(state.error?.message ?? ""),
+              ErrorText(state.error?.message.substring(0, 10) ?? ""),
               SizedBox(
                 height: SpacingConfigs.spacing2,
               ),

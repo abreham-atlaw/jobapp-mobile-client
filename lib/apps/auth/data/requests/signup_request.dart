@@ -1,17 +1,23 @@
+import 'package:jobapp/apps/auth/data/models/worker.dart';
+import 'package:jobapp/apps/auth/data/serializers/worker_serializer.dart';
 import 'package:jobapp/lib/network/request.dart';
 
-class SignupRequest extends Request<String> {
+class SignupRequest extends Request<Worker> {
+  final WorkerSerializer _serializer = WorkerSerializer();
+
   SignupRequest(String username, String fullName, String password)
-      : super("/auth/signup/",
+      : super("/worker/signup/",
             postParams: {
-              "phone_number": username,
-              "full_name": fullName,
-              "password": password
+              "user": {
+                "username": username,
+                "full_name": fullName,
+                "password": password
+              }
             },
             method: Method.post);
 
   @override
-  String deserializeObject(response) {
-    return response["token"];
+  Worker deserializeObject(response) {
+    return _serializer.deserialize(response);
   }
 }

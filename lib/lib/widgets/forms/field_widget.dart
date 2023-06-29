@@ -58,5 +58,8 @@ class _FieldWidgetState<T> extends State<FieldWidget<T>> {
     if (widget.onChanged != null) {
       widget.onChanged!(value);
     }
+    setState(() {
+      _field = widget.field;
+    });
   }
 }

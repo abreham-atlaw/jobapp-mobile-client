@@ -12,6 +12,10 @@ class AuthRepository {
   final TokenStorage _tokenStorage = AuthProviders.provideTokenStorage();
   final NetworkClient _networkClient = CoreProviders.provideNetworkClient();
 
+  Future<NetworkClient> get _authenticatedNetworkClient async {
+    return await CoreProviders.provideAuthenticatedNetworkClient();
+  }
+
   Future<void> authenticate(String token) async {
     await _tokenStorage.storeToken(token);
   }
@@ -22,12 +26,14 @@ class AuthRepository {
   }
 
   Future<void> signup(String username, String fullName, String password) async {
-    await authenticate(await _networkClient
-        .execute(SignupRequest(username, fullName, password)));
+    await _networkClient.execute(SignupRequest(username, fullName, password));
+    await login(username, password);
   }
 
   Future<void> logout() async {
     await _tokenStorage.revokeToken();
+    AuthProviders.reset();
+    CoreProviders.reset();
   }
 
   Future<AuthenticationStatus> _isAuthenticatedLocally() async {
@@ -39,7 +45,11 @@ class AuthRepository {
 
   Future<AuthenticationStatus> getAuthenticationStatus() async {
     try {
-      Worker me = await _networkClient.execute(WhoAmIRequest());
+      if (await _tokenStorage.getToken() == null) {
+        return AuthenticationStatus.none;
+      }
+      Worker me =
+          await (await _authenticatedNetworkClient).execute(WhoAmIRequest());
       if (me.isApproved) {
         return AuthenticationStatus.authenticated;
       }

@@ -1,5 +1,6 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:jobapp/lib/async_bloc/async_error.dart';
+import 'package:jobapp/lib/network/network_client.dart';
 import 'package:meta/meta.dart';
 
 import 'async_state.dart';
@@ -21,6 +22,10 @@ abstract class AsyncEventHandler<E, S> {
   AsyncError parseError(dynamic error) {
     if (error is AsyncError) {
       return error;
+    }
+    if (error is ApiException) {
+      return AsyncError(error.response?.body ?? "Server Error",
+          code: error.statusCode);
     }
     return AsyncError(error.toString());
   }

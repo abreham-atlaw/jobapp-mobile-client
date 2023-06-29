@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:go_router/go_router.dart';
 import 'package:jobapp/apps/auth/application/events/login_event.dart';
 import 'package:jobapp/apps/auth/application/blocs/login_bloc.dart';
 import 'package:jobapp/apps/auth/application/states/login_state.dart';
 import 'package:jobapp/configs/ui_configs.dart';
+import 'package:jobapp/lib/async_bloc/async_status.dart';
+import 'package:jobapp/lib/utils/routing.dart';
 import 'package:jobapp/lib/widgets/buttons/async_button.dart';
 import 'package:jobapp/lib/widgets/containers/full_container.dart';
 import 'package:jobapp/lib/widgets/containers/percentage_container.dart';
@@ -26,6 +27,9 @@ class LoginScreen extends AsyncBlocScreen<LoginBloc, LoginState> {
 
   @override
   Widget onCreateMain(BuildContext context, LoginState state) {
+    if (state.asyncStatus == AsyncStatus.done) {
+      RoutingUitls.redirect("/", context);
+    }
     return FullContainer(
       alignment: Alignment.center,
       child: PercentageContainer(

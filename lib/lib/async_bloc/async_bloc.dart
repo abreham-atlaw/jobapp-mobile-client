@@ -5,13 +5,13 @@ import 'package:jobapp/lib/async_bloc/async_state.dart';
 import 'package:jobapp/lib/async_bloc/async_status.dart';
 import 'package:jobapp/lib/async_bloc/base_state.dart';
 
-class FunctionalAsyncHandler extends AsyncEventHandler<AsyncEvent, AsyncState> {
-  Future<void> Function(AsyncEvent event, AsyncState state) onEventCallback;
-  AsyncState Function(AsyncState)? stateGetter;
-  Future<void> Function(AsyncEvent event, AsyncState state, dynamic error)?
+class FunctionalAsyncHandler extends AsyncEventHandler<AsyncEvent, BaseState> {
+  Future<void> Function(AsyncEvent event, BaseState state) onEventCallback;
+  AsyncState Function(BaseState)? stateGetter;
+  Future<void> Function(AsyncEvent event, BaseState state, dynamic error)?
       onErrorCallback;
-  Future<void> Function(AsyncEvent event, AsyncState state)? onLoadingCallback;
-  Future<void> Function(AsyncEvent event, AsyncState state)? onDoneCallback;
+  Future<void> Function(AsyncEvent event, BaseState state)? onLoadingCallback;
+  Future<void> Function(AsyncEvent event, BaseState state)? onDoneCallback;
 
   FunctionalAsyncHandler(this.onEventCallback, super._parentBloc,
       {this.stateGetter,
@@ -20,12 +20,12 @@ class FunctionalAsyncHandler extends AsyncEventHandler<AsyncEvent, AsyncState> {
       this.onDoneCallback});
 
   @override
-  onEvent(AsyncEvent event, AsyncState state) async {
+  onEvent(AsyncEvent event, BaseState state) async {
     await onEventCallback(event, state);
   }
 
   @override
-  onLoading(AsyncEvent event, AsyncState state) async {
+  onLoading(AsyncEvent event, BaseState state) async {
     await super.onLoading(event, state);
     if (onLoadingCallback != null) {
       await onLoadingCallback!(event, state);
@@ -33,7 +33,7 @@ class FunctionalAsyncHandler extends AsyncEventHandler<AsyncEvent, AsyncState> {
   }
 
   @override
-  onDone(AsyncEvent event, AsyncState state) async {
+  onDone(AsyncEvent event, BaseState state) async {
     await super.onDone(event, state);
     if (onDoneCallback != null) {
       await onDoneCallback!(event, state);
@@ -41,11 +41,19 @@ class FunctionalAsyncHandler extends AsyncEventHandler<AsyncEvent, AsyncState> {
   }
 
   @override
-  onError(AsyncEvent event, AsyncState state, error) async {
+  onError(AsyncEvent event, BaseState state, error) async {
     await super.onError(event, state, error);
     if (onErrorCallback != null) {
       await onErrorCallback!(event, state, error);
     }
+  }
+
+  @override
+  AsyncState getAsyncState(BaseState state) {
+    if (stateGetter == null) {
+      return super.getAsyncState(state);
+    }
+    return stateGetter!(state);
   }
 }
 
@@ -53,13 +61,12 @@ class AsyncBloc<S extends BaseState> extends Bloc<AsyncEvent, S> {
   Future<void> onInit() async {}
 
   Future<void> asyncCall(AsyncEvent event, Emitter emitter,
-      Future<void> Function(AsyncEvent event, AsyncState state) onEvent,
-      {AsyncState Function(AsyncState)? stateGetter,
-      Future<void> Function(AsyncEvent event, AsyncState state, dynamic error)?
+      Future<void> Function(AsyncEvent event, BaseState state) onEvent,
+      {AsyncState Function(BaseState)? stateGetter,
+      Future<void> Function(AsyncEvent event, BaseState state, dynamic error)?
           onError,
-      Future<void> Function(AsyncEvent event, AsyncState state)? onLoading,
-      Future<void> Function(AsyncEvent event, AsyncState state)?
-          onDone}) async {
+      Future<void> Function(AsyncEvent event, BaseState state)? onLoading,
+      Future<void> Function(AsyncEvent event, BaseState state)? onDone}) async {
     var handler = FunctionalAsyncHandler(onEvent, this,
         stateGetter: stateGetter,
         onDoneCallback: onDone,
@@ -88,5 +95,9 @@ class AsyncBloc<S extends BaseState> extends Bloc<AsyncEvent, S> {
 
   AsyncBloc(super.initialState) {
     on<InitializeEvent>(initialize);
+  }
+
+  void syncState(Emitter emitter) {
+    emitter.call(state.copy());
   }
 }

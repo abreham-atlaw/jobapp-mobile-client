@@ -9,7 +9,9 @@ import 'package:jobapp/lib/async_bloc/async_events.dart';
 import 'package:jobapp/lib/async_bloc/async_state.dart';
 import 'package:jobapp/lib/async_bloc/async_status.dart';
 import 'package:jobapp/lib/async_bloc/base_state.dart';
+import 'package:jobapp/lib/utils/routing.dart';
 import 'package:jobapp/lib/utils/token_storage.dart';
+import 'package:jobapp/lib/widgets/screens/app_scaffold.dart';
 import 'package:jobapp/lib/widgets/screens/loading_screen.dart';
 
 import 'error_screen.dart';
@@ -44,6 +46,8 @@ class AuthenticationBloc extends AsyncBloc<AuthenticationState> {
 
 class AuthenticatedScreen extends StatelessWidget {
   Widget child;
+  Widget? loadingScreen;
+  Widget? failedScreen;
   String redirectTo;
   Map<AuthenticationStatus, String> redirectMap;
   List<AuthenticationStatus> validStatuses;
@@ -52,6 +56,8 @@ class AuthenticatedScreen extends StatelessWidget {
       {super.key,
       required this.child,
       this.redirectTo = "auth/review/",
+      this.loadingScreen,
+      this.failedScreen,
       Map<AuthenticationStatus, String>? redirectMap,
       List<AuthenticationStatus>? validStatuses})
       : redirectMap = redirectMap ?? {},
@@ -68,27 +74,31 @@ class AuthenticatedScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider<AuthenticationBloc>(
-      create: (BuildContext context) =>
-          AuthenticationBloc(AuthenticationState()),
-      child: BlocBuilder<AuthenticationBloc, AuthenticationState>(
-          builder: (BuildContext context, AuthenticationState state) {
-        switch (state.asyncStatus) {
-          case AsyncStatus.none:
-            return LoadingScreen(state);
-          case AsyncStatus.loading:
-            return LoadingScreen(state);
-          case AsyncStatus.done:
-            if (_isValidStatus(state.authenticationStatus)) {
-              return child;
-            } else {
-              context.go(_getRedirectPath(state.authenticationStatus));
-              return const SizedBox.shrink();
-            }
-          case AsyncStatus.failed:
-            return ErrorScreen(state);
-        }
-      }),
+    return AppScreen(
+      child: BlocProvider<AuthenticationBloc>(
+        create: (BuildContext context) =>
+            AuthenticationBloc(AuthenticationState()),
+        child: BlocBuilder<AuthenticationBloc, AuthenticationState>(
+            builder: (BuildContext context, AuthenticationState state) {
+          switch (state.initStatus) {
+            case AsyncStatus.none:
+              context.read<AuthenticationBloc>().add(InitializeEvent());
+              return loadingScreen ?? LoadingScreen(state);
+            case AsyncStatus.loading:
+              return loadingScreen ?? LoadingScreen(state);
+            case AsyncStatus.done:
+              if (_isValidStatus(state.authenticationStatus)) {
+                return child;
+              } else {
+                RoutingUitls.redirect(
+                    _getRedirectPath(state.authenticationStatus), context);
+                return const SizedBox.shrink();
+              }
+            case AsyncStatus.failed:
+              return failedScreen ?? ErrorScreen(state);
+          }
+        }),
+      ),
     );
   }
 }

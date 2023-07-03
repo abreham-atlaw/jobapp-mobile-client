@@ -15,7 +15,6 @@ class Job extends Equatable {
   String id;
   Location location;
   String jobType;
-  double wage;
   Employer employer;
   DateTime? acceptTime;
   DateTime? startTime;
@@ -30,7 +29,6 @@ class Job extends Equatable {
       {required this.id,
       required this.location,
       required this.jobType,
-      required this.wage,
       required this.employer,
       this.acceptTime,
       this.startTime,

@@ -10,6 +10,7 @@ import 'package:jobapp/configs/ui_configs.dart';
 import 'package:jobapp/lib/async_bloc/async_state.dart';
 import 'package:jobapp/lib/async_bloc/async_status.dart';
 import 'package:jobapp/lib/forms/field.dart';
+import 'package:jobapp/lib/utils/location.dart';
 import 'package:jobapp/lib/utils/routing.dart';
 import 'package:jobapp/lib/widgets/buttons/async_button.dart';
 import 'package:jobapp/lib/widgets/buttons/base_button.dart';
@@ -87,8 +88,9 @@ class JobDetailWidget extends StatelessWidget {
 class JobDetailActionWidget extends StatelessWidget {
   final Job job;
   final AsyncState state;
+  final Location userLocation;
 
-  JobDetailActionWidget(this.job, this.state);
+  JobDetailActionWidget(this.job, this.state, this.userLocation);
 
   @override
   Widget build(BuildContext context) {
@@ -169,7 +171,12 @@ class JobDetailActionWidget extends StatelessWidget {
                 job.location.name,
                 ColorsConfigs.secondary
               ],
-              [Icons.money, "Wage", "ETB ${job.wage}", ColorsConfigs.success]
+              [
+                Icons.money,
+                "Distance",
+                "${LocationUtils.calcDistance(userLocation, job.location).toStringAsFixed(2)} KM",
+                ColorsConfigs.danger
+              ]
             ]
                 .map<Widget>((List<dynamic> data) => Expanded(
                       child: Container(
@@ -211,7 +218,7 @@ class JobMapActionWidget extends StatelessWidget {
         if (state.selectedJob == null) {
           return JobSearchActionWidget(state.jobs);
         }
-        return JobDetailActionWidget(state.selectedJob!, state.jobAcceptState);
+        return JobDetailActionWidget(state.selectedJob!, state.jobAcceptState, state.userLocation);
       }),
     );
   }

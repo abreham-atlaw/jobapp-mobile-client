@@ -1,4 +1,4 @@
-const String apiHost = "172.20.10.3:8888";
+const String apiHost = "10.0.2.2:8888";
 const String apiBaseUrl = "/api";
 
 // AUTH

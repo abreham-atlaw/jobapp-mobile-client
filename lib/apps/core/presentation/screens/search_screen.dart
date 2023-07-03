@@ -6,6 +6,7 @@ import 'package:jobapp/apps/core/application/states/search_state.dart';
 import 'package:jobapp/apps/core/data/models/job.dart';
 import 'package:jobapp/apps/core/presentation/widgets/job_type_icon.dart';
 import 'package:jobapp/configs/ui_configs.dart';
+import 'package:jobapp/lib/utils/location.dart';
 import 'package:jobapp/lib/utils/routing.dart';
 import 'package:jobapp/lib/widgets/forms/text_field_widget.dart';
 import 'package:jobapp/lib/widgets/screens/bloc_screen.dart';
@@ -45,7 +46,6 @@ class JobSearchResultInstance extends StatelessWidget {
                 ],
               ),
             ),
-            BodyText("ETB ${job.wage}")
           ],
         ),
       ),

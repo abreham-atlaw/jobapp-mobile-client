@@ -81,8 +81,7 @@ class JobSessionScreen
                   ] +
                   [
                     ["Employer's Name", state.job!.employer.user.fullName],
-                    ["Location", "St Michael CMC, Addis Ababa"],
-                    ["Wage", "ETB ${state.job!.wage}"],
+                    ["Location", state.job!.location.name],
                     [
                       "Start Time",
                       DateTimeSerializer().serialize(state.job!.startTime!)

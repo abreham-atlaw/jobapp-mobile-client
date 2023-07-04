@@ -43,14 +43,20 @@ class AuthRepository {
     return AuthenticationStatus.none;
   }
 
+  Future<Worker> whoAmI() async{
+    return await ( await _authenticatedNetworkClient).execute(WhoAmIRequest());
+  }
+
   Future<AuthenticationStatus> getAuthenticationStatus() async {
     try {
       if (await _tokenStorage.getToken() == null) {
         return AuthenticationStatus.none;
       }
-      Worker me =
-          await (await _authenticatedNetworkClient).execute(WhoAmIRequest());
+      Worker me = await whoAmI();
       if (me.isApproved) {
+        if(!me.hasCredit){
+          return AuthenticationStatus.lowCredit;
+        }
         return AuthenticationStatus.authenticated;
       }
       return AuthenticationStatus.review;

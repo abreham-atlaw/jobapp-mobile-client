@@ -1,6 +1,5 @@
 import 'package:jobapp/apps/auth/data/models/worker.dart';
 import 'package:jobapp/apps/auth/data/serializers/worker_serializer.dart';
-import 'package:jobapp/apps/core/data/models/employer.dart';
 import 'package:jobapp/apps/core/data/models/job.dart';
 import 'package:jobapp/apps/core/data/serializers/employer_serializer.dart';
 import 'package:jobapp/apps/core/data/serializers/location_serializer.dart';

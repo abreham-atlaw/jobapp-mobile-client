@@ -1,5 +1,6 @@
 import 'package:go_router/go_router.dart';
 import 'package:jobapp/apps/auth/presentation/screens/login_screen.dart';
+import 'package:jobapp/apps/auth/presentation/screens/lowcredit_screen.dart';
 import 'package:jobapp/apps/auth/presentation/screens/review_screen.dart';
 import 'package:jobapp/apps/auth/presentation/screens/signup_screen.dart';
 import 'package:jobapp/apps/core/data/models/job.dart';
@@ -25,11 +26,16 @@ class JobAppRouter extends GoRouter {
               path: "/auth/review",
               builder: (context, state) => const ReviewScreen()),
           GoRoute(
+              path: "/auth/low-credit",
+              builder: (context, state) => const LowCreditScreen()
+          ),
+          GoRoute(
               path: "/core/job-map",
               builder: (context, state) => AuthenticatedScreen(
                       child: JobMapScreen(
                     selectedJob: state.extra as Job?,
                   ))),
+
           GoRoute(
               path: "/core/settings",
               builder: (context, state) =>

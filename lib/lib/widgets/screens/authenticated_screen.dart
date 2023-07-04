@@ -55,13 +55,19 @@ class AuthenticatedScreen extends StatelessWidget {
   AuthenticatedScreen(
       {super.key,
       required this.child,
-      this.redirectTo = "auth/review/",
+      this.redirectTo = "/auth/review/",
       this.loadingScreen,
       this.failedScreen,
       Map<AuthenticationStatus, String>? redirectMap,
       List<AuthenticationStatus>? validStatuses})
-      : redirectMap = redirectMap ?? {},
-        validStatuses = validStatuses ?? [AuthenticationStatus.authenticated];
+      : redirectMap = {
+          AuthenticationStatus.lowCredit: "/auth/low-credit",
+          AuthenticationStatus.none: "/auth/login",
+          AuthenticationStatus.review: "/auth/review"
+        },
+        validStatuses = validStatuses ?? [AuthenticationStatus.authenticated]{
+      this.redirectMap.addAll(redirectMap??{});
+    }
 
   bool _isValidStatus(AuthenticationStatus status) {
     return (validStatuses.contains(status));

@@ -4,6 +4,14 @@ class Worker {
   User user;
   List<String> skills;
   bool isApproved;
+  bool hasCredit;
+  double credit;
 
-  Worker({required this.user, required this.skills, required this.isApproved});
+  Worker({
+    required this.user,
+    required this.skills,
+    required this.isApproved,
+    required this.credit,
+    required this.hasCredit
+  });
 }

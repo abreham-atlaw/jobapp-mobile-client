@@ -11,7 +11,10 @@ class WorkerSerializer extends Serializer<Worker, Map<String, dynamic>> {
         skills: data["skills"]
             .map<String>((dynamic skill) => skill.toString())
             .toList(),
-        isApproved: data["is_approved"]);
+        isApproved: data["is_approved"],
+        hasCredit: data["has_credit"],
+        credit: data["credit"]
+    );
   }
 
   @override
@@ -19,7 +22,7 @@ class WorkerSerializer extends Serializer<Worker, Map<String, dynamic>> {
     return {
       "user": _userSerializer.serialize(instance.user),
       "skills": instance.skills,
-      "is_approved": instance.isApproved
+      "is_approved": instance.isApproved,
     };
   }
 }

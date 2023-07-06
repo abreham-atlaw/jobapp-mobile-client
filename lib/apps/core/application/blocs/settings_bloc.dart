@@ -13,6 +13,12 @@ class SettingsBloc extends AsyncBloc<SettingsState> {
     on<LogoutEvent>(_handleLogout);
   }
 
+  @override
+  Future<void> onInit() async{
+    await super.onInit();
+    state.me = await _authRepository.whoAmI();
+  }
+
   _handleLogout(LogoutEvent event, Emitter emitter) async {
     await asyncCall(event, emitter,
         (event, state) async => {await _authRepository.logout()},
@@ -20,4 +26,5 @@ class SettingsBloc extends AsyncBloc<SettingsState> {
       return (state as SettingsState).logoutState;
     });
   }
+
 }

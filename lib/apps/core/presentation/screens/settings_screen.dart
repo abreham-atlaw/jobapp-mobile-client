@@ -49,6 +49,12 @@ class SettingsScreen extends AsyncBlocScreen<SettingsBloc, SettingsState> {
             color: ColorsConfigs.white,
           ),
         ),
+        SizedBox(
+          height: SpacingConfigs.spacing0,
+        ),
+        BodyText(
+          "Remaining Credits: ${state.me!.credit}"
+        )
       ],
     ));
   }

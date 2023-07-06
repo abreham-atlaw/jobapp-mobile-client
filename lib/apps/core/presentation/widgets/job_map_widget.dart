@@ -49,7 +49,7 @@ class JobMapWidget extends StatelessWidget {
               latitude: position.center?.latitude ?? 0.0,
               longitude: position.center?.longitude ?? 0.0);
 
-          if (calcDistance(state.searchLocation, newLocation) < 10000) {
+          if (calcDistance(state.searchLocation, newLocation) < 100000) {
             return;
           }
           context.read<JobMapBloc>().add(SearchLocationChangedEvent(

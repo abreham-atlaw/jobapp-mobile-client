@@ -162,7 +162,7 @@ class JobDetailActionWidget extends StatelessWidget {
               [
                 Icons.person_outline,
                 "Employer",
-                "John Doe",
+                job.employer.user.fullName,
                 ColorsConfigs.primary
               ],
               [

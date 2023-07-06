@@ -8,7 +8,18 @@ class JobTypeIcon extends StatelessWidget {
 
   final Map<String, IconData> iconMap = {
     "construction": Icons.construction,
-    "mechanic": Icons.car_repair
+    "mechanic": Icons.car_repair,
+    "electrical installation": Icons.electric_bolt,
+    "network installation": Icons.network_cell,
+    "day laborer": Icons.construction,
+    "satellite dish": Icons.satellite_alt,
+    "painter": Icons.color_lens,
+    "cleaning services": Icons.cleaning_services,
+    "photographer": Icons.camera_alt,
+    "security systems installation": Icons.security,
+    "computer repair": Icons.computer,
+    "carpenter": Icons.carpenter,
+    "plumber": Icons.plumbing,
   };
 
   final IconData defaultIcon = Icons.work;

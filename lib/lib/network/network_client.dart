@@ -8,11 +8,13 @@ import 'request.dart';
 
 class NetworkClient {
   String? _token;
+  String? _clientVersion;
   String host;
   String baseUrl = "";
 
-  NetworkClient(this.host, {token, baseUrl}) {
+  NetworkClient(this.host, {String? token, baseUrl, clientVersion}) {
     _token = token;
+    _clientVersion = clientVersion;
     if (baseUrl != null) {
       this.baseUrl = baseUrl;
     }
@@ -29,6 +31,9 @@ class NetworkClient {
   Map<String, String> _getCompleteHeader(Map<String, String> header) {
     if (_token != null) {
       header[config.authorizationKey] = "${config.authorizationPrefix} $_token";
+    }
+    if (_clientVersion != null){
+      header[config.clientVersionKey] = _clientVersion!;
     }
     header["Content-Type"] = "application/json";
     log("Header: $header");

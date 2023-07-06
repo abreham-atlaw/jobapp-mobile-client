@@ -3,6 +3,7 @@ import 'package:jobapp/apps/auth/presentation/screens/login_screen.dart';
 import 'package:jobapp/apps/auth/presentation/screens/lowcredit_screen.dart';
 import 'package:jobapp/apps/auth/presentation/screens/review_screen.dart';
 import 'package:jobapp/apps/auth/presentation/screens/signup_screen.dart';
+import 'package:jobapp/apps/auth/presentation/screens/update_required_screen.dart';
 import 'package:jobapp/apps/core/data/models/job.dart';
 import 'package:jobapp/apps/core/presentation/screens/job_map_screen.dart';
 import 'package:jobapp/apps/core/presentation/screens/job_session_screen.dart';
@@ -28,6 +29,10 @@ class JobAppRouter extends GoRouter {
           GoRoute(
               path: "/auth/low-credit",
               builder: (context, state) => const LowCreditScreen()
+          ),
+          GoRoute(
+            path: "/auth/update-required",
+            builder: (context, state) => const UpdateRequiredScreen()
           ),
           GoRoute(
               path: "/core/job-map",

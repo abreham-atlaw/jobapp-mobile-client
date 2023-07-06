@@ -1,7 +1,9 @@
 import 'package:jobapp/apps/auth/data/models/authentication_status.dart';
+import 'package:jobapp/apps/auth/data/models/update_info.dart';
 import 'package:jobapp/apps/auth/data/models/worker.dart';
 import 'package:jobapp/apps/auth/data/requests/login_request.dart';
 import 'package:jobapp/apps/auth/data/requests/signup_request.dart';
+import 'package:jobapp/apps/auth/data/requests/update_info_request.dart';
 import 'package:jobapp/apps/auth/data/requests/whoami_request.dart';
 import 'package:jobapp/apps/auth/di/auth_providers.dart';
 import 'package:jobapp/apps/core/di/core_providers.dart';
@@ -21,6 +23,7 @@ class AuthRepository {
   }
 
   Future<void> login(String username, String password) async {
+    await logout();
     await authenticate(
         await _networkClient.execute(LoginRequest(username, password)));
   }
@@ -61,10 +64,22 @@ class AuthRepository {
       }
       return AuthenticationStatus.review;
     } catch (ex) {
-      if (ex is ApiException && ex.statusCode == 401) {
-        return AuthenticationStatus.none;
+      if (ex is ApiException){
+        switch(ex.statusCode){
+
+          case 401:
+            return AuthenticationStatus.none;
+
+          case 426:
+            return AuthenticationStatus.requiresUpdate;
+
+        }
+
       }
       return await _isAuthenticatedLocally();
     }
+  }
+  Future<UpdateInfo> getUpdateInfo() async {
+    return _networkClient.execute(UpdateInfoRequest());
   }
 }

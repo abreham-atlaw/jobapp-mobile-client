@@ -63,7 +63,8 @@ class AuthenticatedScreen extends StatelessWidget {
       : redirectMap = {
           AuthenticationStatus.lowCredit: "/auth/low-credit",
           AuthenticationStatus.none: "/auth/login",
-          AuthenticationStatus.review: "/auth/review"
+          AuthenticationStatus.review: "/auth/review",
+          AuthenticationStatus.requiresUpdate: "/auth/update-required"
         },
         validStatuses = validStatuses ?? [AuthenticationStatus.authenticated]{
       this.redirectMap.addAll(redirectMap??{});

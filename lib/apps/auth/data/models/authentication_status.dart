@@ -1,1 +1,1 @@
-enum AuthenticationStatus { none, review, lowCredit, authenticated }
+enum AuthenticationStatus { none, review, lowCredit, requiresUpdate, authenticated }

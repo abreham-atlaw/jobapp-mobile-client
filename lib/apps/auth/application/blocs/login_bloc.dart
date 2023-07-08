@@ -5,6 +5,6 @@ import 'package:jobapp/lib/async_bloc/async_bloc.dart';
 
 class LoginBloc extends AsyncBloc<LoginState> {
   LoginBloc(super.initialState) {
-    on<LoginEvent>(LoginHander(this).handle);
+    on<LoginEvent>(LoginHandler(this).handle);
   }
 }

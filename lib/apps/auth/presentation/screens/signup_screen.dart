@@ -42,7 +42,7 @@ class SignupScreen extends AsyncBlocScreen<SignupBloc, SignupState> {
               SizedBox(
                 height: SpacingConfigs.spacing3,
               ),
-              ErrorText(state.error?.message.substring(0, 10) ?? ""),
+              ErrorText(state.error?.message ?? ""),
               SizedBox(
                 height: SpacingConfigs.spacing2,
               ),

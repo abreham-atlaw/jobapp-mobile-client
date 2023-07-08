@@ -1,8 +1,11 @@
+
 import 'package:jobapp/lib/async_bloc/async_status.dart';
+
+import 'async_error.dart';
 
 class BaseState {
   AsyncStatus initStatus = AsyncStatus.none;
-  Exception? initError;
+  AsyncError? initError;
 
   BaseState newInstance() {
     return BaseState();

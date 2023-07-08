@@ -4,6 +4,7 @@ import 'package:jobapp/lib/async_bloc/async_handler.dart';
 import 'package:jobapp/lib/async_bloc/async_state.dart';
 import 'package:jobapp/lib/async_bloc/async_status.dart';
 import 'package:jobapp/lib/async_bloc/base_state.dart';
+import 'package:jobapp/lib/async_bloc/error_mapper.dart';
 
 class FunctionalAsyncHandler extends AsyncEventHandler<AsyncEvent, BaseState> {
   Future<void> Function(AsyncEvent event, BaseState state) onEventCallback;
@@ -58,6 +59,14 @@ class FunctionalAsyncHandler extends AsyncEventHandler<AsyncEvent, BaseState> {
 }
 
 class AsyncBloc<S extends BaseState> extends Bloc<AsyncEvent, S> {
+
+  final ErrorMapper _errorMapper;
+
+  AsyncBloc(super.initialState, {ErrorMapper? initErrorMapper}):
+  _errorMapper = initErrorMapper ?? ErrorMapper(){
+    on<InitializeEvent>(initialize);
+  }
+
   Future<void> onInit() async {}
 
   Future<void> asyncCall(AsyncEvent event, Emitter emitter,
@@ -84,17 +93,9 @@ class AsyncBloc<S extends BaseState> extends Bloc<AsyncEvent, S> {
       emitter.call(state.copy());
     } catch (ex) {
       state.initStatus = AsyncStatus.failed;
-      if (ex is Exception) {
-        state.initError = ex;
-      } else {
-        state.initError = Exception(ex.toString());
-      }
+      state.initError = _errorMapper.map(ex);
       emitter.call(state.copy());
     }
-  }
-
-  AsyncBloc(super.initialState) {
-    on<InitializeEvent>(initialize);
   }
 
   void syncState(Emitter emitter) {

@@ -19,34 +19,34 @@ class ColorsConfigs {
 }
 
 class FontSizeConfigs {
-  static double size0 = 10;
-  static double size1 = size0 * 1.5;
-  static double size2 = size1 * 1.5;
-  static double size3 = size2 * 1.5;
-  static double size4 = size3 * 1.5;
+  static const double size0 = 10;
+  static const double size1 = size0 * 1.5;
+  static const double size2 = size1 * 1.5;
+  static const double size3 = size2 * 1.5;
+  static const double size4 = size3 * 1.5;
 }
 
 class SpacingConfigs {
-  static double spacing0 = 10;
-  static double spacing1 = spacing0 * 1.5;
-  static double spacing2 = spacing1 * 1.5;
-  static double spacing3 = spacing2 * 1.5;
-  static double spacing4 = spacing3 * 1.5;
-  static double spacing5 = spacing4 * 1.5;
+  static const double spacing0 = 10;
+  static const double spacing1 = spacing0 * 1.5;
+  static const double spacing2 = spacing1 * 1.5;
+  static const double spacing3 = spacing2 * 1.5;
+  static const double spacing4 = spacing3 * 1.5;
+  static const double spacing5 = spacing4 * 1.5;
 }
 
 class WidgetSizeConfigs {
-  static double size0 = 50;
-  static double size1 = size0 * 1.5;
-  static double size2 = size1 * 1.5;
-  static double size3 = size2 * 1.5;
-  static double size4 = size3 * 1.5;
-  static double size5 = size4 * 1.5;
-  static double size6 = size5 * 1.5;
-  static double size7 = size6 * 1.5;
-  static double size8 = size7 * 1.5;
-  static double size9 = size8 * 1.5;
-  static double size10 = size9 * 1.5;
+  static const double size0 = 50;
+  static const double size1 = size0 * 1.5;
+  static const double size2 = size1 * 1.5;
+  static const double size3 = size2 * 1.5;
+  static const double size4 = size3 * 1.5;
+  static const double size5 = size4 * 1.5;
+  static const double size6 = size5 * 1.5;
+  static const double size7 = size6 * 1.5;
+  static const double size8 = size7 * 1.5;
+  static const double size9 = size8 * 1.5;
+  static const double size10 = size9 * 1.5;
 }
 
 class LoadingIndicatorsConfigs {

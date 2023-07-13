@@ -17,6 +17,10 @@ class Heading2 extends Heading {
       : super(data, 30);
 }
 
+class Heading3 extends Heading {
+  Heading3(String data, {super.key, super.textAlign, super.color})
+      : super(data, 23);
+}
 
 // class Heading1 extends Heading {
 //   Heading1(String data, {super.key}) : super(data, 10);

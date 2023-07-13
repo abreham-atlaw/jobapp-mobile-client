@@ -13,6 +13,6 @@ class SignupHandler extends AsyncEventHandler<SignupEvent, SignupState> {
   onEvent(SignupEvent event, SignupState state) async {
     await state.form.isValid(throwError: true);
     await _repository.signup(state.form.phoneNumber.getValue()!,
-        state.form.fullName.getValue()!, state.form.password.getValue()!);
+        state.form.fullName.getValue()!, state.form.password.getValue()!, state.skills);
   }
 }

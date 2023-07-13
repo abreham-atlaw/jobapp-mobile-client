@@ -28,8 +28,8 @@ class AuthRepository {
         await _networkClient.execute(LoginRequest(username, password)));
   }
 
-  Future<void> signup(String username, String fullName, String password) async {
-    await _networkClient.execute(SignupRequest(username, fullName, password));
+  Future<void> signup(String username, String fullName, String password, List<String> skills) async {
+    await _networkClient.execute(SignupRequest(username, fullName, password, skills));
     await login(username, password);
   }
 

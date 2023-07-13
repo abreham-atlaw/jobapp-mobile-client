@@ -1,5 +1,6 @@
 import 'package:jobapp/apps/auth/di/auth_providers.dart';
 import 'package:jobapp/apps/core/data/repositories/job_repository.dart';
+import 'package:jobapp/apps/core/data/repositories/utils_repository.dart';
 import 'package:jobapp/lib/network/network_client.dart';
 
 import 'package:jobapp/configs/data_configs.dart' as config;
@@ -26,6 +27,10 @@ class CoreProviders {
 
   static Future<String> provideClientVersion() async{
     return (await PackageInfo.fromPlatform()).version;
+  }
+
+  static UtilsRepository provideUtilsRepository(){
+    return UtilsRepository();
   }
 
   static reset() {

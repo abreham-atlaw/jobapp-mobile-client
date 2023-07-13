@@ -7,7 +7,7 @@ import 'package:jobapp/lib/async_bloc/async_bloc.dart';
 
 class LowCreditBloc extends AsyncBloc<LowCreditState>{
 
-  AuthRepository _repository = AuthProviders.provideAuthRepository();
+  final AuthRepository _repository = AuthProviders.provideAuthRepository();
 
   LowCreditBloc(super.initialState);
 

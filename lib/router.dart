@@ -1,4 +1,5 @@
 import 'package:go_router/go_router.dart';
+import 'package:jobapp/apps/auth/presentation/screens/choose_skills_screen.dart';
 import 'package:jobapp/apps/auth/presentation/screens/login_screen.dart';
 import 'package:jobapp/apps/auth/presentation/screens/lowcredit_screen.dart';
 import 'package:jobapp/apps/auth/presentation/screens/review_screen.dart';
@@ -18,8 +19,12 @@ class JobAppRouter extends GoRouter {
       : super(routes: [
           GoRoute(path: "/", builder: (context, state) => const SplashScreen()),
           GoRoute(
-              path: "/auth/signup",
-              builder: (context, state) => const SignupScreen()),
+            path: "/auth/signup",
+            builder: (context, state) => const ChooseSkillsScreen()
+          ),
+          GoRoute(
+              path: "/auth/signup-form",
+              builder: (context, state) => SignupScreen(skills: state.extra as List<String>?)),
           GoRoute(
               path: "/auth/login",
               builder: (context, state) => const LoginScreen()),

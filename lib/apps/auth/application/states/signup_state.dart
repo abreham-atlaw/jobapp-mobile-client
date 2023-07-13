@@ -4,6 +4,7 @@ import 'package:jobapp/lib/async_bloc/base_state.dart';
 
 class SignupState extends AsyncState {
   SignupForm form = SignupForm();
+  List<String> skills = [];
 
   @override
   BaseState newInstance() {
@@ -14,5 +15,6 @@ class SignupState extends AsyncState {
   void copyProperties(BaseState newState) {
     super.copyProperties(newState);
     (newState as SignupState).form = form;
+    newState.skills = skills;
   }
 }

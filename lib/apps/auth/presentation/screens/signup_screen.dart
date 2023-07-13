@@ -17,7 +17,10 @@ import 'package:jobapp/lib/widgets/text/errors.dart';
 import 'package:jobapp/lib/widgets/text/headers.dart';
 
 class SignupScreen extends AsyncBlocScreen<SignupBloc, SignupState> {
-  const SignupScreen({Key? key}) : super(key: key);
+
+  final List<String>? skills;
+
+  const SignupScreen({Key? key, this.skills}) : super(key: key);
 
   @override
   SignupBloc onCreateBloc(SignupState state) {
@@ -31,7 +34,7 @@ class SignupScreen extends AsyncBlocScreen<SignupBloc, SignupState> {
     }
     return SingleChildScrollView(
       child: Container(
-        padding: EdgeInsets.symmetric(vertical: SpacingConfigs.spacing5),
+        padding: const EdgeInsets.symmetric(vertical: SpacingConfigs.spacing5),
         alignment: Alignment.center,
         child: PercentageContainer(
           width: 0.8,
@@ -39,11 +42,11 @@ class SignupScreen extends AsyncBlocScreen<SignupBloc, SignupState> {
             children: [
               Heading1("Let's Get Started"),
               BodyText("Create an account and start working now"),
-              SizedBox(
+              const SizedBox(
                 height: SpacingConfigs.spacing3,
               ),
               ErrorText(state.error?.message ?? ""),
-              SizedBox(
+              const SizedBox(
                 height: SpacingConfigs.spacing2,
               ),
               LabeledFormField(
@@ -53,7 +56,7 @@ class SignupScreen extends AsyncBlocScreen<SignupBloc, SignupState> {
                   iconData: Icons.person,
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 height: SpacingConfigs.spacing3,
               ),
               LabeledFormField(
@@ -63,7 +66,7 @@ class SignupScreen extends AsyncBlocScreen<SignupBloc, SignupState> {
                   iconData: Icons.phone_android,
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 height: SpacingConfigs.spacing3,
               ),
               LabeledFormField(
@@ -74,7 +77,7 @@ class SignupScreen extends AsyncBlocScreen<SignupBloc, SignupState> {
                   obsecureText: true,
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 height: SpacingConfigs.spacing3,
               ),
               LabeledFormField(
@@ -85,7 +88,7 @@ class SignupScreen extends AsyncBlocScreen<SignupBloc, SignupState> {
                   obsecureText: true,
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 height: SpacingConfigs.spacing4,
               ),
               AsyncButton(
@@ -94,7 +97,7 @@ class SignupScreen extends AsyncBlocScreen<SignupBloc, SignupState> {
                 label: "Create Account",
                 state: state,
               ),
-              SizedBox(
+              const SizedBox(
                 height: SpacingConfigs.spacing3,
               ),
               Align(
@@ -122,6 +125,10 @@ class SignupScreen extends AsyncBlocScreen<SignupBloc, SignupState> {
 
   @override
   SignupState onCreateState() {
-    return SignupState();
+    var state = SignupState();
+    if(skills != null){
+      state.skills = skills!;
+    }
+    return state;
   }
 }
